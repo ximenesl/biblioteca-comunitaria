@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca;
+package br.com.senac.biblioteca;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication

@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.configuration;
+package br.com.senac.biblioteca.infrastructure.configuration;
 import br.com.senac.biblioteca.infrastructure.adapters.out.persistence.entity.*;
 import br.com.senac.biblioteca.infrastructure.adapters.out.persistence.repository.*;
 import org.springframework.boot.CommandLineRunner;

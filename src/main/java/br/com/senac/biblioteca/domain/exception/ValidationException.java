@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.domain.exception;
+package br.com.senac.biblioteca.domain.exception;
 public class ValidationException extends RuntimeException {
     public ValidationException(String message) { super(message); }
 }

@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.domain.model.vo;
+package br.com.senac.biblioteca.domain.model.vo;
 import br.com.senac.biblioteca.domain.exception.ValidationException;
 import java.util.regex.Pattern;
 public record Isbn(String valor) {

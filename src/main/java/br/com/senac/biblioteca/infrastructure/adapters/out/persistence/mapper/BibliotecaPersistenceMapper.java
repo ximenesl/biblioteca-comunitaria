@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.out.persistence.mapper;
+package br.com.senac.biblioteca.infrastructure.adapters.out.persistence.mapper;
 import br.com.senac.biblioteca.domain.model.*;
 import br.com.senac.biblioteca.domain.model.vo.Isbn;
 import br.com.senac.biblioteca.infrastructure.adapters.out.persistence.entity.*;
