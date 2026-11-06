@@ -36,9 +36,14 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(LivroResponse.de(salvo, salvo.getExemplares()));
     }
 
-    @GetMapping({"", "/busca"})
-    public ResponseEntity<List<LivroResponse>> buscar(@RequestParam(required = false) String busca) {
+    @GetMapping
+    public ResponseEntity<List<LivroResponse>> listar(@RequestParam(required = false) String busca) {
         List<LivroComDisponibilidade> livros = buscarLivrosUseCase.executar(busca);
         return ResponseEntity.ok(livros.stream().map(LivroResponse::de).toList());
+    }
+
+    @GetMapping("/busca")
+    public ResponseEntity<List<LivroResponse>> buscar(@RequestParam(required = false) String busca) {
+        return listar(busca);
     }
 }

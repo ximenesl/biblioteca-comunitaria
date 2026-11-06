@@ -30,9 +30,14 @@ public class RelatorioController {
         this.clockPort = clockPort;
     }
 
-    @GetMapping({"/ranking-livros", "/livros-mais-emprestados"})
+    @GetMapping("/ranking-livros")
     public ResponseEntity<List<RankingLivroResponse>> rankingLivros() {
         return ResponseEntity.ok(obterRankingLivrosUseCase.executar().stream().map(RankingLivroResponse::de).toList());
+    }
+
+    @GetMapping("/livros-mais-emprestados")
+    public ResponseEntity<List<RankingLivroResponse>> livrosMaisEmprestados() {
+        return rankingLivros();
     }
 
     @GetMapping("/atrasados")
