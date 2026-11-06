@@ -8,7 +8,7 @@
 [![SemVer](https://img.shields.io/badge/SemVer-v1.0.0-orange.svg)](#-versionamento-sem%C3%A2ntico-semver)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Backend corporativo para gestão de acervo físico, empréstimos, devoluções e monitoramento de atrasos em bibliotecas comunitárias de bairro (Desafio 06 — Senac).
+Backend corporativo para gestão de acervo físico, empréstimos, devoluções e monitoramento de atrasos em bibliotecas comunitárias de bairro.
 
 ---
 
