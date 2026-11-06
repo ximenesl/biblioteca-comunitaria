@@ -1,7 +1,7 @@
 # 📚 Biblioteca Comunitária
 
 [![Java Version](https://img.shields.io/badge/Java-21%20LTS-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.2-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.8-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Architecture](https://img.shields.io/badge/Architecture-Hexagonal%20(Ports%20%26%20Adapters)-blueviolet)](#-arquitetura-do-sistema)
 [![Tests](https://img.shields.io/badge/Tests-100%25%20Passing%20(CA1--CA5)-success)](src/test/java/br/com/senac/biblioteca/BibliotecaComunitariaIntegrationTests.java)
 [![Security](https://img.shields.io/badge/Security-By%20Design%20(OWASP%20%2B%20RFC%207807)-informational)](#-seguran%C3%A7a-security-by-design)
@@ -16,7 +16,7 @@ Backend corporativo para gestão de acervo físico, empréstimos, devoluções e
 
 A **Biblioteca Comunitária** é uma API REST corporativa desenvolvida para informatizar e profissionalizar o controle operacional de acervo e a circulação de livros em bibliotecas comunitárias mantidas por iniciativas voluntárias. O software resolve problemas críticos de gestão de balcão — como o extravio frequente de obras, a falta de visibilidade em tempo real sobre exemplares físicos disponíveis e a ausência de controle sistemático sobre prazos de devolução — aplicando regras de negócio rigorosas para conferência de estoque, teto máximo de empréstimos simultâneos por leitor e rastreamento imediato de títulos em atraso.
 
-A stack tecnológica foi concebida integralmente sobre o ecossistema moderno **Java 21 LTS** e **Spring Boot 3.4.2**, estruturada segundo as diretrizes da **Arquitetura Hexagonal (Ports and Adapters)**, **Clean Code** e **Domain-Driven Design (DDD)**. O armazenamento e consulta de dados utilizam persistência relacional com **Spring Data JPA** e **Hibernate** sobre banco de dados em memória **H2** (configurado em modo de compatibilidade com PostgreSQL), eliminando a dependência de infraestruturas cloud pagas. A segurança adota a abordagem *Security by Design*, com cabeçalhos HTTP defensivos recomendados pela OWASP, padronização de erros e exceções via **RFC 7807 (ProblemDetail)** e documentação viva interativa com **OpenAPI 3.0 / Swagger UI**.
+A stack tecnológica foi concebida integralmente sobre o ecossistema moderno **Java 21 LTS** e **Spring Boot 3.2.8**, estruturada segundo as diretrizes da **Arquitetura Hexagonal (Ports and Adapters)**, **Clean Code** e **Domain-Driven Design (DDD)**. O armazenamento e consulta de dados utilizam persistência relacional com **Spring Data JPA** e **Hibernate** sobre banco de dados em memória **H2** (configurado em modo de compatibilidade com PostgreSQL), eliminando a dependência de infraestruturas cloud pagas. A segurança adota a abordagem *Security by Design*, com cabeçalhos HTTP defensivos recomendados pela OWASP, padronização de erros e exceções via **RFC 7807 (ProblemDetail)** e documentação viva interativa com **OpenAPI 3.0 / Swagger UI**.
 
 ---
 

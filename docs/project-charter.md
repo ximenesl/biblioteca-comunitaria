@@ -3,7 +3,7 @@
 ## 1. Identificação do Projeto
 - **Nome do Projeto:** Biblioteca Comunitária (Sistema de Gestão de Acervo e Empréstimos de Bairro)
 - **Desafio:** Desafio 06 — Cloud Challenge / Senac 2026.2
-- **Linguagem & Plataforma:** Java 21 LTS, Spring Boot 3.4.2
+- **Linguagem & Plataforma:** Java 21 LTS, Spring Boot 3.2.8
 - **Padrão Arquitetural:** Arquitetura Hexagonal (Ports and Adapters), Clean Code, Domain-Driven Design, Security by Design
 - **Persistência:** Relacional (H2 / PostgreSQL Compatible Mode com JPA/Hibernate)
 
