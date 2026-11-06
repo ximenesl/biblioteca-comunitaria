@@ -13,7 +13,7 @@
 
 ## 2. Requisitos Não Funcionais (RNF)
 - **[RNF01] Arquitetura Hexagonal:** Domínio desacoplado de frameworks e banco de dados via Ports and Adapters.
-- **[RNF02] Runtime Java Moderno:** Construído sobre Java 21 LTS e Spring Boot 3.4.2.
+- **[RNF02] Runtime Java Moderno:** Construído sobre Java 21 LTS e Spring Boot 3.2.8.
 - **[RNF03] Security by Design:** Validação declarativa, OWASP headers e ProblemDetail (RFC 7807).
 - **[RNF04] Consistência de Estoque:** Cálculo relacional dinâmico de disponíveis (`COUNT(*) WHERE devolvido_em IS NULL`).
 - **[RNF05] Códigos HTTP REST:** Conflitos de negócio retornam HTTP 409 Conflict; validações inválidas retornam HTTP 400 Bad Request; entidades inexistentes retornam HTTP 404 Not Found.
