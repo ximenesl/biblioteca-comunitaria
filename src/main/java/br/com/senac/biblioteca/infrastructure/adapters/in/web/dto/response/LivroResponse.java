@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.in.web.dto.response;
+package br.com.senac.biblioteca.infrastructure.adapters.in.web.dto.response;
 import br.com.senac.biblioteca.domain.model.Livro;
 import br.com.senac.biblioteca.domain.model.LivroComDisponibilidade;
 public record LivroResponse(Long id, String titulo, String autor, String isbn, int exemplares, int disponiveis) {

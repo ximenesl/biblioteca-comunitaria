@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.out.persistence.repository;
+package br.com.senac.biblioteca.infrastructure.adapters.out.persistence.repository;
 import br.com.senac.biblioteca.domain.model.RankingLivro;
 import br.com.senac.biblioteca.infrastructure.adapters.out.persistence.entity.EmprestimoJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

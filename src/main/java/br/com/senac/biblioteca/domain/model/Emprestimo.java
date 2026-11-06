@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.domain.model;
+package br.com.senac.biblioteca.domain.model;
 import br.com.senac.biblioteca.domain.exception.BusinessConflictException;
 import br.com.senac.biblioteca.domain.exception.ValidationException;
 import java.time.LocalDate;

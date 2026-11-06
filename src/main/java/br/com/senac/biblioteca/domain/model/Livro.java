@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.domain.model;
+package br.com.senac.biblioteca.domain.model;
 import br.com.senac.biblioteca.domain.exception.ValidationException;
 import br.com.senac.biblioteca.domain.model.vo.Isbn;
 import java.util.Objects;

@@ -1,14 +1,20 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.in.web.error;
-import br.com.senac.biblioteca.domain.exception.*;
+package br.com.senac.biblioteca.infrastructure.adapters.in.web.error;
+
+import br.com.senac.biblioteca.domain.exception.BusinessConflictException;
+import br.com.senac.biblioteca.domain.exception.ResourceNotFoundException;
+import br.com.senac.biblioteca.domain.exception.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import java.net.URI;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 import java.time.Instant;
-@RestControllerAdvice
+
+@RestControllerAdvice(basePackages = "br.com.senac.biblioteca.infrastructure.adapters.in.web")
 public class RestExceptionHandler {
+
     @ExceptionHandler(BusinessConflictException.class)
     public ProblemDetail handleBusinessConflict(BusinessConflictException ex) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
@@ -16,6 +22,7 @@ public class RestExceptionHandler {
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ProblemDetail handleNotFound(ResourceNotFoundException ex) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
@@ -23,6 +30,7 @@ public class RestExceptionHandler {
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
+
     @ExceptionHandler(ValidationException.class)
     public ProblemDetail handleValidation(ValidationException ex) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -30,6 +38,7 @@ public class RestExceptionHandler {
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Campos invalidos na requisicao.");
@@ -37,9 +46,19 @@ public class RestExceptionHandler {
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ProblemDetail handleNoResourceFound(NoResourceFoundException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, "Endpoint ou recurso nao encontrado: " + ex.getResourcePath());
+        problem.setTitle("Rota Nao Encontrada");
+        problem.setProperty("timestamp", Instant.now());
+        return problem;
+    }
+
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGeneral(Exception ex) {
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno processando a solicitacao.");
+        ex.printStackTrace();
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno: " + (ex.getMessage() != null ? ex.getMessage() : ex.getClass().getSimpleName()));
         problem.setTitle("Erro Interno");
         problem.setProperty("timestamp", Instant.now());
         return problem;
