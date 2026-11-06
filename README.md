@@ -6,7 +6,6 @@
 [![Tests](https://img.shields.io/badge/Tests-100%25%20Passing%20(CA1--CA5)-success)](src/test/java/br/com/senac/biblioteca/BibliotecaComunitariaIntegrationTests.java)
 [![Security](https://img.shields.io/badge/Security-By%20Design%20(OWASP%20%2B%20RFC%207807)-informational)](#-seguran%C3%A7a-security-by-design)
 [![SemVer](https://img.shields.io/badge/SemVer-v1.0.0-orange.svg)](#-versionamento-sem%C3%A2ntico-semver)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Backend corporativo para gestão de acervo físico, empréstimos, devoluções e monitoramento de atrasos em bibliotecas comunitárias de bairro (Desafio 06 — Senac).
 
