@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.application.usecase;
+package br.com.senac.biblioteca.application.usecase;
 import br.com.senac.biblioteca.domain.exception.BusinessConflictException;
 import br.com.senac.biblioteca.domain.model.Livro;
 import br.com.senac.biblioteca.domain.model.vo.Isbn;

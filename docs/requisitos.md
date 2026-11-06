@@ -1,20 +1,20 @@
-﻿# EspecificaÃ§Ã£o de Requisitos do Sistema
+# Especificação de Requisitos do Sistema
 
 ## 1. Requisitos Funcionais (RF)
-- **[RF01] Cadastro de Livros:** Cadastro de livro informando tÃ­tulo, autor, ISBN Ãºnico e quantidade de exemplares ($\ge 1$).
-- **[RF02] Busca de Livros e Disponibilidade:** Busca por tÃ­tulo ou autor com cÃ¡lculo dinÃ¢mico de exemplares disponÃ­veis (`exemplares - ativos`).
-- **[RF03] EmprÃ©stimo de Livro:** EmprÃ©stimo se houver exemplar disponÃ­vel e leitor tiver menos de 2 emprÃ©stimos ativos. Prazo previsto = data + 14 dias.
-- **[RF04] DevoluÃ§Ã£o de Livro:** Registro de devoluÃ§Ã£o, restituiÃ§Ã£o ao estoque e bloqueio de devoluÃ§Ã£o redundante.
-- **[RF05] Listagem de EmprÃ©stimos Atrasados:** EmprÃ©stimos ativos com `previsto_para < hoje` e `devolvido_em IS NULL`.
-- **[RF06] Carga Inicial de Dados:** Leitores fictÃ­cios e acervo demonstrativo carregados no boot.
-- **[RF07] RenovaÃ§Ã£o de EmprÃ©stimo (Extra):** ProrrogaÃ§Ã£o de +14 dias se o emprÃ©stimo nÃ£o estiver em atraso.
-- **[RF08] HistÃ³rico por Leitor (Extra):** Consulta de todos os emprÃ©stimos realizados por um leitor.
-- **[RF09] Ranking de Livros (Extra):** Obras ordenadas por quantidade total de emprÃ©stimos histÃ³ricos.
+- **[RF01] Cadastro de Livros:** Cadastro de livro informando título, autor, ISBN único e quantidade de exemplares ($\ge 1$).
+- **[RF02] Busca de Livros e Disponibilidade:** Busca por título ou autor com cálculo dinâmico de exemplares disponíveis (`exemplares - ativos`).
+- **[RF03] Empréstimo de Livro:** Empréstimo se houver exemplar disponível e leitor tiver menos de 2 empréstimos ativos. Prazo previsto = data + 14 dias corridos.
+- **[RF04] Devolução de Livro:** Registro de devolução, restituição imediata ao acervo e bloqueio de devolução redundante/duplicada.
+- **[RF05] Listagem de Empréstimos Atrasados:** Empréstimos ativos com `previsto_para < hoje` e `devolvido_em IS NULL`.
+- **[RF06] Carga Inicial de Dados:** Leitores fictícios e acervo demonstrativo carregados no boot da aplicação.
+- **[RF07] Renovação de Empréstimo (Extra):** Prorrogação de +14 dias se o empréstimo não estiver em atraso.
+- **[RF08] Histórico por Leitor (Extra):** Consulta de todos os empréstimos realizados por um determinado leitor.
+- **[RF09] Ranking de Livros (Extra):** Obras ordenadas por quantidade total de empréstimos históricos.
 
-## 2. Requisitos NÃ£o Funcionais (RNF)
-- **[RNF01] Arquitetura Hexagonal:** DomÃ­nio desacoplado de frameworks e banco de dados.
-- **[RNF02] Runtime Java Moderno:** ConstruÃ­do sobre Java LTS e Spring Boot 3.4.2.
-- **[RNF03] Security by Design:** ValidaÃ§Ã£o declarativa, OWASP headers e ProblemDetail (RFC 7807).
-- **[RNF04] ConsistÃªncia de Estoque:** CÃ¡lculo relacional dinÃ¢mico de disponÃ­veis (`COUNT(*) WHERE devolvido_em IS NULL`).
-- **[RNF05] CÃ³digos HTTP REST:** Conflitos de negÃ³cio retornam HTTP 409 Conflict.
-- **[RNF06] DocumentaÃ§Ã£o OpenAPI 3:** Swagger UI acessÃ­vel em `/swagger-ui/index.html`.
+## 2. Requisitos Não Funcionais (RNF)
+- **[RNF01] Arquitetura Hexagonal:** Domínio desacoplado de frameworks e banco de dados via Ports and Adapters.
+- **[RNF02] Runtime Java Moderno:** Construído sobre Java 21 LTS e Spring Boot 3.4.2.
+- **[RNF03] Security by Design:** Validação declarativa, OWASP headers e ProblemDetail (RFC 7807).
+- **[RNF04] Consistência de Estoque:** Cálculo relacional dinâmico de disponíveis (`COUNT(*) WHERE devolvido_em IS NULL`).
+- **[RNF05] Códigos HTTP REST:** Conflitos de negócio retornam HTTP 409 Conflict; validações inválidas retornam HTTP 400 Bad Request; entidades inexistentes retornam HTTP 404 Not Found.
+- **[RNF06] Documentação OpenAPI 3:** Swagger UI acessível e interativo em `/swagger-ui/index.html`.

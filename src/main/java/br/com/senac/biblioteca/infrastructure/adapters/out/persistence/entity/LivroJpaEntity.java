@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.out.persistence.entity;
+package br.com.senac.biblioteca.infrastructure.adapters.out.persistence.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Check;
 @Entity

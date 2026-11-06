@@ -1,43 +1,44 @@
-﻿# Project Charter â€” Termo de Abertura do Projeto (TAP)
+# Project Charter — Termo de Abertura do Projeto (TAP)
 
-## 1. IdentificaÃ§Ã£o do Projeto
-- **Nome do Projeto:** Biblioteca ComunitÃ¡ria (Sistema de GestÃ£o de Acervo e EmprÃ©stimos de Bairro)
-- **Desafio:** Desafio 06 â€” Cloud Challenge / Senac 2026.2
+## 1. Identificação do Projeto
+- **Nome do Projeto:** Biblioteca Comunitária (Sistema de Gestão de Acervo e Empréstimos de Bairro)
+- **Desafio:** Desafio 06 — Cloud Challenge / Senac 2026.2
 - **Linguagem & Plataforma:** Java 21 LTS, Spring Boot 3.4.2
-- **PadrÃ£o Arquitetural:** Arquitetura Hexagonal (Ports and Adapters), Clean Code, Domain-Driven Design, Security by Design
-- **PersistÃªncia:** Relacional (H2 / PostgreSQL Compatible Mode com JPA/Hibernate)
+- **Padrão Arquitetural:** Arquitetura Hexagonal (Ports and Adapters), Clean Code, Domain-Driven Design, Security by Design
+- **Persistência:** Relacional (H2 / PostgreSQL Compatible Mode com JPA/Hibernate)
 
 ---
 
-## 2. Justificativa e VisÃ£o Geral do Produto
-Em bibliotecas comunitÃ¡rias de bairro mantidas por voluntÃ¡rios, o controle de acervo e emprÃ©stimo frequentemente ocorre de forma manual em cadernos. Isso gera falta de visibilidade do estoque real, inseguranÃ§a de posse e ausÃªncia de relatÃ³rios de atraso.
-O sistema **Biblioteca ComunitÃ¡ria** Ã© uma API REST corporativa desenvolvida para ser operada pelo voluntÃ¡rio no balcÃ£o da biblioteca, automatizando e auditando as operaÃ§Ãµes de busca, cadastro, emprÃ©stimo, devoluÃ§Ã£o e acompanhamento de atrasos com tolerÃ¢ncia zero a inconsistÃªncias.
+## 2. Justificativa e Visão Geral do Produto
+Em bibliotecas comunitárias de bairro mantidas por voluntários, o controle de acervo e empréstimo frequentemente ocorre de forma manual em cadernos. Isso gera falta de visibilidade do estoque real, extravio de livros e ausência de relatórios de atraso.
+O sistema **Biblioteca Comunitária** é uma API REST corporativa desenvolvida para ser operada pelo voluntário no balcão da biblioteca, automatizando e auditando as operações de busca, cadastro, empréstimo, devolução e acompanhamento de atrasos com tolerância zero a inconsistências.
 
 ---
 
 ## 3. Objetivos SMART
 
-| Meta | CritÃ©rio SMART | DescriÃ§Ã£o |
+| Meta | Critério SMART | Descrição |
 |---|---|---|
-| **S** (EspecÃ­fico) | Automatizar controle de exemplares e devoluÃ§Ãµes | Registrar emprÃ©stimos e devoluÃ§Ãµes por exemplar Ãºnico com prazo padrÃ£o de 14 dias corridos. |
-| **M** (MensurÃ¡vel) | 100% dos critÃ©rios de aceitaÃ§Ã£o validados por testes | Cobrir 100% dos fluxos de negÃ³cio crÃ­ticos (CA1 a CA5) com testes automatizados. |
-| **A** (AtingÃ­vel) | Escopo enxuto em Arquitetura Hexagonal | Implementar a soluÃ§Ã£o utilizando Java e Spring Boot sem acoplamento a nuvem. |
-| **R** (Relevante) | ResoluÃ§Ã£o de inconsistÃªncias de concorrÃªncia | Eliminar conflitos de estoque calculando a disponibilidade em tempo real (`exemplares - emprÃ©stimos ativos`). |
-| **T** (Temporal) | Entrega em ciclo Ã¡gil com SDLC | ExecuÃ§Ã£o via Git Flow, com backlog de engenharia rastreÃ¡vel e commits convencionais. |
+| **S** (Específico) | Automatizar controle de exemplares e devoluções | Registrar empréstimos e devoluções por exemplar único com prazo padrão de 14 dias corridos. |
+| **M** (Mensurável) | 100% dos critérios de aceitação validados por testes | Cobrir 100% dos fluxos de negócio críticos (CA1 a CA5) com testes automatizados. |
+| **A** (Atingível) | Escopo enxuto em Arquitetura Hexagonal | Implementar a solução utilizando Java e Spring Boot sem acoplamento a serviços pagos de nuvem. |
+| **R** (Relevante) | Resolução de inconsistências de concorrência | Eliminar conflitos de estoque calculando a disponibilidade em tempo real (`exemplares - empréstimos ativos`). |
+| **T** (Temporal) | Entrega em ciclo ágil com SDLC | Execução via Git Flow, com backlog de engenharia rastreável e commits convencionais. |
 
 ---
 
 ## 4. Escopo do Projeto
 
 ### 4.1. In-Scope
-- **GestÃ£o de Livros:** Cadastro com tÃ­tulo, autor, ISBN Ãºnico e exemplares ($\ge 1$).
-- **Busca de Acervo:** Filtro por tÃ­tulo ou autor, com cÃ¡lculo dinÃ¢mico de disponÃ­veis.
-- **EmprÃ©stimo:** ValidaÃ§Ã£o de exemplar disponÃ­vel, teto de 2 emprÃ©stimos simultÃ¢neos por leitor e devoluÃ§Ã£o prevista para 14 dias.
-- **DevoluÃ§Ã£o:** Registro da devoluÃ§Ã£o e bloqueio de devoluÃ§Ã£o duplicada (HTTP 409).
-- **RelatÃ³rio de Atrasos:** Listagem de emprÃ©stimos com prazo expirado e nÃ£o devolvidos.
-- **Extras:** RenovaÃ§Ã£o de prazo, histÃ³rico do leitor e ranking de obras mais emprestadas.
-- **SeguranÃ§a & Boas PrÃ¡ticas:** Zero trust na validaÃ§Ã£o, RFC 7807 (ProblemDetail) e testes de integraÃ§Ã£o automatizados.
+- **Gestão de Livros:** Cadastro com título, autor, ISBN único e exemplares ($\ge 1$).
+- **Busca de Acervo:** Filtro por título ou autor, com cálculo dinâmico de disponíveis.
+- **Empréstimo:** Validação de exemplar disponível, teto de 2 empréstimos simultâneos por leitor e devolução prevista para 14 dias.
+- **Devolução:** Registro da devolução e bloqueio de devolução duplicada (HTTP 409).
+- **Relatório de Atrasos:** Listagem de empréstimos com prazo expirado e não devolvidos.
+- **Extras:** Renovação de prazo, histórico do leitor e ranking de obras mais emprestadas.
+- **Segurança & Boas Práticas:** Zero trust na validação, RFC 7807 (ProblemDetail) e testes de integração automatizados.
 
 ### 4.2. Out-of-Scope
-- ServiÃ§os externos de computaÃ§Ã£o em nuvem proprietÃ¡rios.
-- CobranÃ§a de multas em dinheiro ou gateways bancÃ¡rios.
+- Serviços externos de computação em nuvem proprietários.
+- Cobrança de multas em dinheiro ou gateways bancários.
+- Autenticação federada complexa OAuth2/SAML.

@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.domain.ports.out;
+package br.com.senac.biblioteca.domain.ports.out;
 import br.com.senac.biblioteca.domain.model.Emprestimo;
 import br.com.senac.biblioteca.domain.model.RankingLivro;
 import java.time.LocalDate;

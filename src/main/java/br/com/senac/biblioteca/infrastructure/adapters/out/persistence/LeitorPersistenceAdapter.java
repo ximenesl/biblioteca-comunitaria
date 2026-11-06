@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.out.persistence;
+package br.com.senac.biblioteca.infrastructure.adapters.out.persistence;
 import br.com.senac.biblioteca.domain.model.Leitor;
 import br.com.senac.biblioteca.domain.ports.out.LeitorRepositoryPort;
 import br.com.senac.biblioteca.infrastructure.adapters.out.persistence.mapper.BibliotecaPersistenceMapper;

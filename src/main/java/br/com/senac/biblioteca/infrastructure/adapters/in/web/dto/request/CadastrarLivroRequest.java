@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.in.web.dto.request;
+package br.com.senac.biblioteca.infrastructure.adapters.in.web.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 public record CadastrarLivroRequest(

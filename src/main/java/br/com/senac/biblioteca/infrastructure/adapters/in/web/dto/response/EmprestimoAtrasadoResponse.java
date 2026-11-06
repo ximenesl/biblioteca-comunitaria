@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.in.web.dto.response;
+package br.com.senac.biblioteca.infrastructure.adapters.in.web.dto.response;
 import br.com.senac.biblioteca.domain.model.Emprestimo;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

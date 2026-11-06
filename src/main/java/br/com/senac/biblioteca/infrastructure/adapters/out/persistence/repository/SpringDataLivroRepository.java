@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.out.persistence.repository;
+package br.com.senac.biblioteca.infrastructure.adapters.out.persistence.repository;
 import br.com.senac.biblioteca.infrastructure.adapters.out.persistence.entity.LivroJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

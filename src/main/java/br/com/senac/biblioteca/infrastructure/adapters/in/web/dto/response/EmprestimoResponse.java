@@ -1,4 +1,4 @@
-﻿package br.com.senac.biblioteca.infrastructure.adapters.in.web.dto.response;
+package br.com.senac.biblioteca.infrastructure.adapters.in.web.dto.response;
 import br.com.senac.biblioteca.domain.model.Emprestimo;
 import java.time.LocalDate;
 public record EmprestimoResponse(Long id, Long livroId, String livroTitulo, Long leitorId, String leitorNome, LocalDate emprestadoEm, LocalDate previstoPara, LocalDate devolvidoEm, String status, int renovacoes) {
