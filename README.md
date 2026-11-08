@@ -23,15 +23,17 @@ A stack tecnológica foi concebida integralmente sobre o ecossistema moderno **J
 ## 🎯 Sumário de Funcionalidades
 
 ### Funcionalidades Implementadas (v1.0.0)
-- ✅ **[RF01] Cadastro de Livros:** Validação de ISBN canônico único (Value Object), título, autor e quantidade de exemplares ($\ge 1$).
+- ✅ **[RF01] Cadastro de Livros com ISBN Único:** Validação de ISBN canônico único (Value Object), título, autor e quantidade de exemplares ($\ge 1$).
 - ✅ **[RF02] Catálogo e Busca Dinâmica:** Pesquisa por título ou autor com cálculo em tempo real de exemplares disponíveis (`total - empréstimos ativos`).
-- ✅ **[RF03] Empréstimo com Reserva de Estoque:** Validação de disponibilidade física e prazo padrão de devolução estabelecido em **14 dias corridos**.
-- ✅ **[RF04] Limite por Leitor:** Restrição estrita de no máximo 2 empréstimos simultâneos por leitor cadastrado.
-- ✅ **[RF05] Devolução e Bloqueio Duplo:** Registro de baixa de empréstimo com restituição imediata ao acervo e bloqueio idempotente contra devoluções repetidas.
-- ✅ **[RF06] Relatório de Atrasos:** Listagem filtrada de empréstimos não devolvidos cuja data prevista já expirou em relação à data corrente.
-- ✅ **[RF07] Carga Inicial Automatizada:** Povoamento no boot com leitores, catálogo de livros e cenário de empréstimo vencido para validação imediata.
-- ✅ **[RF08] Renovação de Empréstimos (Extra):** Prorrogação do prazo em +14 dias, com bloqueio automático caso a obra já esteja com atraso registrado.
-- ✅ **[RF09] Histórico e Ranking (Extra):** Extrato individual de empréstimos por leitor e ranking analítico dos livros mais requisitados da biblioteca.
+- ✅ **[RF03] Empréstimo com Validação de Estoque:** Validação de disponibilidade física e bloqueio com HTTP 409 caso não haja exemplares livres (CA1).
+- ✅ **[RF04] Limite de Empréstimos por Leitor:** Restrição estrita de no máximo 2 empréstimos simultaneamente ativos por leitor cadastrado (CA2).
+- ✅ **[RF05] Prazo Legal de Devolução:** Cálculo automatizado da data prevista de devolução fixada em **14 dias corridos**.
+- ✅ **[RF06] Devolução de Exemplar e Bloqueio Duplo:** Registro de baixa com restituição imediata ao acervo e bloqueio idempotente contra devoluções repetidas (CA3).
+- ✅ **[RF07] Relatório de Empréstimos Atrasados:** Listagem filtrada de empréstimos não devolvidos cuja data prevista já expirou (CA4).
+- ✅ **[RF08] Carga Inicial Automatizada:** Povoamento no boot com leitores, catálogo de livros e cenário de empréstimo vencido para validação imediata.
+- ✅ **[RF09] Renovação de Prazo com Bloqueio de Atraso:** Prorrogação do prazo em +14 dias com bloqueio automático caso a obra já esteja vencida.
+- ✅ **[RF10] Histórico de Empréstimos por Leitor:** Extrato individual completo de empréstimos por leitor cadastrado.
+- ✅ **[RF11] Ranking Analítico de Obras Populares:** Ranking de livros mais requisitados ordenados por quantidade histórica de empréstimos.
 
 ### Funcionalidades Futuras (Planejadas para v1.1.0)
 - ⏳ Notificação automatizada de leitores via WhatsApp/E-mail 2 dias antes do vencimento.
