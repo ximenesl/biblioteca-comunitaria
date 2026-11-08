@@ -1,34 +1,95 @@
-name: Java CI
-on:
-  push: { branches: [ "main", "dev" ] }
-  pull_request: { branches: [ "main", "dev" ] }
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-java@v4
-      with: { java-version: '21', distribution: 'temurin', cache: maven }
-    - run: mvn clean test
-name: Java CI with Maven
+name: biblioteca-comunitaria
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ main, develop, "devops-*" ]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ main, develop ]
+  workflow_dispatch:
 
 jobs:
-  build:
+  security:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven and Run Tests
-      run: mvn clean test
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        continue-on-error: true
+        with:
+          config: auto
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        continue-on-error: true
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: 'HIGH,CRITICAL'
+
+  qa:
+    runs-on: ubuntu-latest
+    needs: security
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run tests with Maven
+        run: mvn clean test
+
+      - name: Upload Surefire test reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
+
+  build:
+    runs-on: ubuntu-latest
+    needs: qa
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Package JAR with Maven
+        run: mvn package -DskipTests
+
+      - name: Publish dist package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: target/*.jar

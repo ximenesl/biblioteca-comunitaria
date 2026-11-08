@@ -1,18 +1,9 @@
 ---
-name: Feature Request
-about: Nova funcionalidade
-title: 'feat: '
-labels: 'feature'
----
-### DescriÃ§Ã£o
-### CritÃ©rios BDD
----
 name: Feature Request / User Story
 about: Sugira uma nova funcionalidade ou história de usuário para o sistema
-title: 'feat: '
-labels: 'feature'
+title: '[FEAT] '
+labels: 'type:feature'
 assignees: ''
-
 ---
 
 ### Descrição da Funcionalidade
@@ -25,3 +16,8 @@ Uma descrição clara e concisa do objetivo.
 
 ### Critérios de Aceite (BDD)
 - [ ] **Dado** ... **Quando** ... **Então** ...
+
+### Checklist de Qualidade
+- [ ] Testes unitários do domínio
+- [ ] Rastreabilidade em `docs/rastreabilidade.md`
+- [ ] Exemplos OpenAPI no Swagger
