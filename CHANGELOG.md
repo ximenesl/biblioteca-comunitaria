@@ -5,6 +5,20 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-11-11
+
+### Corrigido
+- **Swagger 500**: corrige `NullPointerException` no Springdoc ao gerar `/v3/api-docs` causado por `@RestControllerAdvice(basePackages = ...)` combinado com handlers de `ProblemDetail`.
+- Atualização do `springdoc-openapi-starter-webmvc-ui` 2.5.0 → 2.6.0 (fix oficial para NPE com `NoResourceFoundException`).
+- Propriedades `springdoc.override-with-generic-response=false` e `springdoc.default-produces-media-type` adicionadas para estabilidade do gerador de spec.
+
+### Melhorado
+- `OpenApiConfig` reescrito com `Info` completa, `Contact`, `License` e `Server` declarativo.
+- Todos os controllers anotados com `@Tag`, `@Operation`, `@ApiResponse` e `@ExampleObject`:
+  - **Livros**: 3 exemplos reais de cadastro (Tolkien, Clean Code, Dom Casmurro).
+  - **Emprestimos**: exemplos de empréstimo, devolução, renovação e histórico por leitor.
+  - **Relatorios**: descrições dos endpoints de ranking e atrasados.
+
 ## [2.0.0] - 2026-11-08
 
 ### Adicionado
