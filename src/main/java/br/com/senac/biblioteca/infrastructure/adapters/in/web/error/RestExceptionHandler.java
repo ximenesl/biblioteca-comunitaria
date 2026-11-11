@@ -12,7 +12,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.Instant;
 
-@RestControllerAdvice(basePackages = "br.com.senac.biblioteca.infrastructure.adapters.in.web")
+@RestControllerAdvice
 public class RestExceptionHandler {
 
     @ExceptionHandler(BusinessConflictException.class)
