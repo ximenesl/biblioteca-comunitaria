@@ -23,7 +23,8 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Adicionado
 - Atendimento a 100% dos apontamentos da Avaliação Técnica Semanal (Issues #18 a #32).
-- Pipeline CI multi-estágio (`security`, `qa`, `build`) com Gitleaks, Semgrep SAST e Trivy vulnerability scanner.
+- Containerização oficial com `Dockerfile` multi-stage (JRE 21 Alpine, usuário non-root `spring:spring`, healthcheck) e `docker-compose.yml` (#56).
+- Pipeline CI estendido com validação de segurança e qualidade da imagem Docker: `security` (repo) ➔ `qa` (testes) ➔ `docker-sec` (Trivy image scan) ➔ `docker-qa` (smoke test dinâmico e validação de healthcheck do contêiner) ➔ `build` (#56).
 - Matriz de rastreabilidade bidirecional `docs/rastreabilidade.md` cobrindo RF ↔ UC ↔ US ↔ Issue ↔ Código ↔ Teste.
 - Suíte completa de testes unitários isolados com Mockito para domínio (`Livro`, `Leitor`, `Emprestimo`, `Isbn`) e casos de uso (`RealizarEmprestimoServiceUnitTest`, `DevolucaoERenovacaoServiceUnitTest`).
 - Suíte de testes de integração para validação de cabeçalhos OWASP (`SecurityHeadersIntegrationTest`).

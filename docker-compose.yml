@@ -1,0 +1,21 @@
+services:
+  biblioteca-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: biblioteca-comunitaria:2.0.0
+    container_name: biblioteca-comunitaria-api
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=default
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:bibliotecadb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/v1/livros"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
+    restart: unless-stopped
+
