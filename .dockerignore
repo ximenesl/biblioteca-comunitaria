@@ -1,0 +1,12 @@
+target/
+.git/
+.github/
+.idea/
+.vscode/
+docs/
+*.md
+.env*
+*.log
+docker-compose*.yml
+.gitleaks.toml
+

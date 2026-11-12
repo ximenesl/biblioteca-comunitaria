@@ -8,30 +8,35 @@ on:
   workflow_dispatch:
 
 jobs:
+  # ============================================================================
+  # 1. SEGURANÇA DO CÓDIGO-FONTE (SAST, Secrets e FS Scan)
+  # ============================================================================
   security:
+    name: "Security Scan (Repo)"
     runs-on: ubuntu-latest
     permissions:
       contents: read
       security-events: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Run Gitleaks
+      - name: Run Gitleaks (Secret Detection)
         uses: gitleaks/gitleaks-action@v2
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run Semgrep
+      - name: Run Semgrep (SAST)
         uses: returntocorp/semgrep-action@v1
         continue-on-error: true
         with:
           config: auto
 
-      - name: Run Trivy vulnerability scanner
+      - name: Run Trivy Vulnerability Scanner (Filesystem)
         uses: aquasecurity/trivy-action@master
         continue-on-error: true
         with:
@@ -42,14 +47,19 @@ jobs:
           ignore-unfixed: true
           severity: 'HIGH,CRITICAL'
 
+  # ============================================================================
+  # 2. QA DO CÓDIGO-FONTE (Testes Unitários e de Integração)
+  # ============================================================================
   qa:
+    name: "QA & Unit/Integration Tests"
     runs-on: ubuntu-latest
     needs: security
     permissions:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -58,25 +68,163 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run tests with Maven
+      - name: Run Maven Tests with Surefire
         run: mvn clean test
 
-      - name: Upload Surefire test reports
+      - name: Upload Surefire Test Reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: surefire-reports
           path: target/surefire-reports/
 
-  build:
+  # ============================================================================
+  # 3. SEGURANÇA DA IMAGEM DOCKER (Build + Image Vulnerability Scan)
+  # ============================================================================
+  docker-sec:
+    name: "Docker Security (Image Scan)"
     runs-on: ubuntu-latest
     needs: qa
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        run: |
+          docker build -t biblioteca-comunitaria:latest -t biblioteca-comunitaria:${{ github.sha }} .
+
+      - name: Scan Docker Image with Trivy (Vulnerabilities & Misconfigurations)
+        uses: aquasecurity/trivy-action@master
+        continue-on-error: true
+        with:
+          scan-type: 'image'
+          image-ref: 'biblioteca-comunitaria:latest'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: 'HIGH,CRITICAL'
+
+      - name: Audit Docker Image Configuration (Non-Root User)
+        run: |
+          USER_CHECK=$(docker image inspect biblioteca-comunitaria:latest --format '{{.Config.User}}')
+          echo "Usuario configurado na imagem: $USER_CHECK"
+          if [ -z "$USER_CHECK" ] || [ "$USER_CHECK" = "root" ]; then
+            echo "ALERTA: Imagem configurada como root!"
+            exit 1
+          fi
+          echo "Sucesso: Imagem executa sob usuario restrito non-root ($USER_CHECK)."
+
+      - name: Save Docker Image Artifact for QA
+        run: |
+          mkdir -p /tmp/docker-image
+          docker save biblioteca-comunitaria:latest -o /tmp/docker-image/biblioteca-image.tar
+
+      - name: Upload Docker Image Tar
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image-artifact
+          path: /tmp/docker-image/biblioteca-image.tar
+          retention-days: 1
+
+  # ============================================================================
+  # 4. QA DA IMAGEM DOCKER (Smoke Test, Healthcheck e Validação de Endpoints)
+  # ============================================================================
+  docker-qa:
+    name: "Docker QA & Container Validation"
+    runs-on: ubuntu-latest
+    needs: docker-sec
+    permissions:
+      contents: read
+
+    steps:
+      - name: Download Docker Image Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image-artifact
+          path: /tmp/docker-image
+
+      - name: Load Docker Image
+        run: |
+          docker load -i /tmp/docker-image/biblioteca-image.tar
+          docker images
+
+      - name: Run Container
+        run: |
+          docker run -d --name biblioteca-app \
+            -p 8080:8080 \
+            -e SERVER_PORT=8080 \
+            -e SPRING_PROFILES_ACTIVE=default \
+            biblioteca-comunitaria:latest
+
+      - name: Wait for Application Readiness & Healthcheck
+        run: |
+          echo "Aguardando inicializacao do Spring Boot no container..."
+          READY=0
+          for i in $(seq 1 30); do
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/api/v1/livros || true)
+            echo "Tentativa $i: HTTP Status $HTTP_CODE"
+            if [ "$HTTP_CODE" -eq 200 ]; then
+              READY=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$READY" -ne 1 ]; then
+            echo "Falha: Container nao respondeu com HTTP 200 dentro do tempo limite!"
+            docker logs biblioteca-app
+            exit 1
+          fi
+
+      - name: Validate OpenAPI / Swagger JSON Endpoint
+        run: |
+          HTTP_DOCS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/v3/api-docs)
+          echo "Endpoint /v3/api-docs retornou: HTTP $HTTP_DOCS"
+          if [ "$HTTP_DOCS" -ne 200 ]; then
+            echo "Falha no Swagger /v3/api-docs!"
+            docker logs biblioteca-app
+            exit 1
+          fi
+
+      - name: Validate Business Data in Container (Smoke Test)
+        run: |
+          BODY=$(curl -s http://localhost:8080/api/v1/livros)
+          echo "Resposta JSON da API: $BODY"
+          if ! echo "$BODY" | grep -q "O Senhor dos Anéis"; then
+            echo "Falha: Dados de carga inicial nao encontrados na resposta!"
+            docker logs biblioteca-app
+            exit 1
+          fi
+          echo "Sucesso: API retornou dados do acervo perfeitamente dentro do container."
+
+      - name: Inspect Container Logs & Clean Up
+        if: always()
+        run: |
+          echo "=== Logs do Container ==="
+          docker logs biblioteca-app
+          docker stop biblioteca-app || true
+          docker rm biblioteca-app || true
+
+  # ============================================================================
+  # 5. BUILD E PUBLICAÇÃO DE ARTEFATOS
+  # ============================================================================
+  build:
+    name: "Build & Dist Packaging"
+    runs-on: ubuntu-latest
+    needs: docker-qa
     permissions:
       contents: read
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4

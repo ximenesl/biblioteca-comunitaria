@@ -114,6 +114,18 @@ mvn clean test
 mvn spring-boot:run
 ```
 
+### Execução via Docker ou Docker Compose
+```bash
+# Construir imagem Docker multi-stage
+docker build -t biblioteca-comunitaria:2.0.0 .
+
+# Executar contêiner em segundo plano
+docker run -d -p 8080:8080 --name biblioteca-api biblioteca-comunitaria:2.0.0
+
+# Ou inicializar via Docker Compose
+docker compose up -d
+```
+
 A API estará disponível em: `http://localhost:8080`
 
 ### Documentação Interativa (Swagger UI)
