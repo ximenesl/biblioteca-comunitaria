@@ -72,7 +72,7 @@ jobs:
         run: mvn clean test
 
       - name: Upload Surefire Test Reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: surefire-reports
@@ -127,7 +127,7 @@ jobs:
           docker save biblioteca-comunitaria:latest -o /tmp/docker-image/biblioteca-image.tar
 
       - name: Upload Docker Image Tar
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: docker-image-artifact
           path: /tmp/docker-image/biblioteca-image.tar
@@ -237,7 +237,7 @@ jobs:
         run: mvn package -DskipTests
 
       - name: Publish dist package artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: target/*.jar
