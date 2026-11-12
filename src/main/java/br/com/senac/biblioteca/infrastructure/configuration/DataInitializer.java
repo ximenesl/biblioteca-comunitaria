@@ -24,6 +24,7 @@ public class DataInitializer implements CommandLineRunner {
         livroRepository.save(new LivroJpaEntity(null, "Domain-Driven Design", "Eric Evans", "978-0321125217", 1));
         livroRepository.save(new LivroJpaEntity(null, "Refactoring", "Martin Fowler", "978-0134757599", 1));
         LivroJpaEntity livro4 = livroRepository.save(new LivroJpaEntity(null, "O Pequeno Principe", "Antoine de Saint-Exupery", "978-8522031405", 3));
+        livroRepository.save(new LivroJpaEntity(null, "O Senhor dos Anéis: A Sociedade do Anel", "J. R. R. Tolkien", "978-8595084759", 3));
 
         // Emprestimo antigo em atraso (CA4)
         LocalDate hoje = LocalDate.now();
