@@ -11,7 +11,7 @@
     </parent>
     <groupId>br.com.senac.biblioteca</groupId>
     <artifactId>biblioteca-comunitaria</artifactId>
-    <version>2.1.0</version>
+    <version>2.2.0</version>
     <name>biblioteca-comunitaria</name>
     <properties>
         <java.version>21</java.version>

@@ -5,6 +5,18 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-11-11
+
+### Adicionado
+- `Dockerfile` multi-stage (builder: `maven:3.9.9-eclipse-temurin-21-alpine`, runner: `eclipse-temurin:21-jre-alpine`) com usuário non-root `spring:spring`, `HEALTHCHECK` e `JAVA_OPTS` para containers.
+- `.dockerignore` excluindo artefatos desnecessários da imagem.
+- `docker-compose.yml` para execução local completa sem configuração adicional.
+- Pipeline CI estendida com 5 estágios: `security → qa → docker-sec → docker-qa → build`.
+  - `docker-sec`: build da imagem, Trivy image scan e auditoria de usuário non-root.
+  - `docker-qa`: smoke test dinâmico do container (HTTP 200, `/v3/api-docs`, seed data).
+- `docs/rastreabilidade.md`: RNF07 adicionado para rastreabilidade de Docker.
+- `README.md`: seção "Execução via Docker ou Docker Compose" com comandos prontos.
+
 ## [2.1.0] - 2026-11-11
 
 ### Corrigido
